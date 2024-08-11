@@ -1,0 +1,36 @@
+<%= link_to "New", add_student_path, data: { turbo_frame: 'modal' } %>
+
+<h1>Student Dashboard</h1>
+
+<table class="table">
+  <caption>List of users</caption>
+
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Student Name</th>
+      <th scope="col">Subject</th>
+      <th scope="col">Marks</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @students.each do |student| %>
+      <% student.marks.each do |mark| %>
+        <tr>
+          <td scope="row"><%= student.id %></td>
+          <td><%= "#{student.first_name} #{student.last_name}" %></td>
+          <td><%= mark.subject.name %></td>
+          <td><%= mark.score %></td>
+          <td>
+            <%= render partial: 'shared/dropdown', locals: { 
+              item_id: student.id, 
+              edit_path: edit_student_path(student), 
+              delete_path: student_path(student) 
+          } %>
+          </td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>

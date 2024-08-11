@@ -1,0 +1,11 @@
+<div data-controller="dropdown">
+  <%= button_tag type: 'button', class: 'btn dropdown-toggle ', data: { action: 'click->dropdown#toggle' }, aria: { expanded: 'false' } do %>
+    <span class="visually-hidden">Toggle Dropdown</span>
+  <% end %>
+
+  <div data-dropdown-target="menu" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+    <%= link_to 'Edit', edit_path, class: 'dropdown-item', data: { turbo_frame: 'modal', action: 'click->dropdown#hide' } %>
+    <%= button_to 'Delete', delete_path, method: :delete, data: { turbo_frame: 'modal', action: 'click->dropdown#hide' }, class: 'dropdown-item' %>
+  </div>
+</div>
