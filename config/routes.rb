@@ -1,4 +1,15 @@
 Rails.application.routes.draw do
+  devise_for :users, controllers: {
+    registrations: 'users/registrations'
+  }
+
+  root 'teachers#home_page'
+  resources :teachers
+  get 'teacher/home', to: 'teachers#home_page', as: 'teacher_home'
+  resources :students, only: [:index, :edit, :update, :destroy]
+  get 'add_student', to: 'students#new', as: 'add_student'
+
+  
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

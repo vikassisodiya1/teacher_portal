@@ -11,6 +11,20 @@
   </head>
 
   <body>
+      <%= turbo_frame_tag 'modal'%>
+
+    <% if user_signed_in? %>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+          <a class="navbar-brand" href="#">TailWebs.</a>
+          <%= button_to "Sign out", destroy_user_session_path, :method => :delete %>
+        </div>
+      </nav>
+    <% end %>
+
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
     <%= yield %>
+
   </body>
 </html>

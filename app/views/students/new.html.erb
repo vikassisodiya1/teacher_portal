@@ -1,0 +1,6 @@
+<h1>Student#new</h1>
+<p>Find me in app/views/student/new.html.erb</p>
+
+<%= turbo_stream.replace 'remote_modal' do %>
+  <%= render 'add_student'%>
+<% end %>
