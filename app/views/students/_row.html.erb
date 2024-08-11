@@ -1,0 +1,14 @@
+        
+<tr id="<%= dom_id student%>">
+  <td scope="row"><%= student.id %></td>
+  <td><%= "#{student.first_name} #{student.last_name}" %></td>
+  <td><%= mark.subject.name %></td>
+  <td><%= mark.score %></td>
+  <td>
+    <%= render partial: 'shared/dropdown', locals: { 
+              item_id: student.id, 
+              edit_path: edit_student_path(student), 
+              delete_path: student_path(student) 
+          } %>
+  </td>
+</tr>

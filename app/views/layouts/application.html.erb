@@ -10,21 +10,37 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-      <%= turbo_frame_tag 'modal'%>
-
+ <body class="bg-light">
+  <div class="d-flex flex-column min-vh-100 main-content">
     <% if user_signed_in? %>
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <nav class="navbar navbar-expand-lg navbar-light bg-body">
         <div class="container">
-          <a class="navbar-brand" href="#">TailWebs.</a>
-          <%= button_to "Sign out", destroy_user_session_path, :method => :delete %>
+          <a class="navbar-brand" href="#!">
+            <img src="/tailwebs-logo.png" alt="Tailwebs Logo" width="175" height="30">
+          </a>
+          <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "btn" %>
         </div>
       </nav>
     <% end %>
 
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-    <%= yield %>
+    <div class="container mt-4">
+      <% if notice.present? %>
+        <div class="alert alert-info">
+          <%= notice %>
+        </div>
+      <% end %>
+      <% if alert.present? %>
+        <div class="alert alert-danger">
+          <%= alert %>
+        </div>
+      <% end %>
 
-  </body>
+      <%= yield %>
+    </div>
+
+    <%= turbo_frame_tag 'modal' %>
+  </div>
+</body>
+
+
 </html>

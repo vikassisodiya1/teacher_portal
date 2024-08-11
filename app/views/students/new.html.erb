@@ -1,6 +1,48 @@
-<h1>Student#new</h1>
-<p>Find me in app/views/student/new.html.erb</p>
+<%= render layout: 'shared/modal', locals: { title: 'Add Student' } do %>
+  <%= form_for @student, url: students_path, remote: true, method: :post, html: { class: 'needs-validation', novalidate: true, enctype: 'multipart/form-data' } do |f| %>
+    <div data-modal-target="form" class="card-body">
+      <!-- Row for first name and last name -->
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <div class="form-group">
+            <%= f.label :first_name, "First Name", class: "form-label" %>
+            <%= f.text_field :first_name, class: "form-control", value: @student.first_name %>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <%= f.label :last_name, "Last Name", class: "form-label" %>
+            <%= f.text_field :last_name, class: "form-control", value: @student.last_name %>
+          </div>
+        </div>
+      </div>
 
-<%= turbo_stream.replace 'remote_modal' do %>
-  <%= render 'add_student'%>
+      <!-- Fields for marks, each on separate rows -->
+      <%= f.fields_for :marks do |marks_form| %>
+        <!-- Row for subject -->
+        <div class="row mb-3">
+          <div class="col-md-12">
+            <div class="form-group">
+              <%= marks_form.label :subject_id, "Subject", class: "form-label" %>
+              <%= marks_form.collection_select :subject_id, @subjects, :id, :name, { selected: marks_form.object.subject_id, prompt: "Select Subject" }, class: "form-control" %>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row for score -->
+        <div class="row mb-3">
+          <div class="col-md-12">
+            <div class="form-group">
+              <%= marks_form.label :score, "Score", class: "form-label" %>
+              <%= marks_form.text_field :score, class: "form-control", value: marks_form.object.score %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+
+      <div class="d-flex justify-content-end">
+        <%= f.submit "Update", class: "btn btn-success", data: { turbo_frame: 'modal', action: "click->modal#close" } %>
+      </div>
+    </div>
+  <% end %>
 <% end %>

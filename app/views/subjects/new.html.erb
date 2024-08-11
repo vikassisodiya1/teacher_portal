@@ -1,0 +1,15 @@
+<h1>Add Subject for <%= @teacher.first_name %></h1>
+<%= render layout: 'shared/modal', locals: { title: 'Add Subject' } do %>
+  <%= form_with(model: [@teacher, @subject], local: true) do |form| %>
+    <div class="modal-body">
+      <div class="form-group">
+        <%= form.label :name, "Subject Name", class: "form-label" %>
+        <%= form.text_field :name, class: "form-control", placeholder: "Enter subject name" %>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <%= form.submit "Add Subject", class: "btn btn-primary", data: { action: "modal#close" } %>
+    </div>
+  <% end %>
+<% end %>

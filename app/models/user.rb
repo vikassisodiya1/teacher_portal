@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
@@ -7,5 +9,4 @@ class User < ApplicationRecord
   has_one :teacher, dependent: :destroy
   has_one :student, dependent: :destroy
   accepts_nested_attributes_for :teacher
-
 end
