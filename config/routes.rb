@@ -7,7 +7,6 @@ Rails.application.routes.draw do
 
   root 'students#index'
 
-
   get 'teachers/:teacher_id/subjects/new', to: 'subjects#new', as: :new_teacher_subject
   post 'teachers/:teacher_id/subjects', to: 'subjects#create', as: :teacher_subjects
 

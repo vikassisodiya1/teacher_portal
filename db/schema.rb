@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 20_240_810_164_256) do # rubocop:disable Metrics/BlockLength
+ActiveRecord::Schema[7.1].define(version: 20_240_810_164_256) do
   create_table 'marks', force: :cascade do |t|
     t.integer 'score'
     t.integer 'student_id', null: false
