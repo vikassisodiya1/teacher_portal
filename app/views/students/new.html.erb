@@ -1,5 +1,5 @@
 <%= render layout: 'shared/modal', locals: { title: 'Add Student' } do %>
-  <%= form_for @student, url: students_path, remote: true, method: :post, html: { class: 'needs-validation', novalidate: true, enctype: 'multipart/form-data' } do |f| %>
+  <%= form_for @student, url: students_path, remote: true, method: :post, html: { class: 'needs-validation', enctype: 'multipart/form-data' } do |f| %>
     <div data-modal-target="form" class="card-body">
       <!-- Row for first name and last name -->
       <div class="row mb-3">
@@ -23,7 +23,7 @@
         <div class="row mb-3">
           <div class="col-md-12">
             <div class="form-group">
-              <%= marks_form.label :subject_id, "Subject", class: "form-label" %>
+              <%= marks_form.label :subject_id, "Subject", class: "form-label"%>
               <%= marks_form.collection_select :subject_id, @subjects, :id, :name, { selected: marks_form.object.subject_id, prompt: "Select Subject" }, class: "form-control" %>
             </div>
           </div>

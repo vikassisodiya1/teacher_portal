@@ -1,0 +1,11 @@
+<div data-controller="flash">
+  <% if notice %>
+    <div class="alert alert-success" role="alert">
+      <%= notice %>
+    </div>
+  <% elsif alert %>
+    <div class="alert alert-danger">
+      <%= alert %>
+    </div>
+  <% end %>
+</div>

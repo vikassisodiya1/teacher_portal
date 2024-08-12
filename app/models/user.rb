@@ -7,6 +7,11 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_one :teacher, dependent: :destroy
-  has_one :student, dependent: :destroy
   accepts_nested_attributes_for :teacher
+
+  before_save :default_role
+
+  def default_role
+    self.role = 'teacher'
+  end
 end

@@ -4,8 +4,8 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
 
   def after_sign_in_path_for(resource)
-    if resource.email == 'test1@example.com'
-      teachers # Replace with the actual route
+    if resource.role == 'teacher'
+      root_path # Replace with the actual route
     else
       super
     end

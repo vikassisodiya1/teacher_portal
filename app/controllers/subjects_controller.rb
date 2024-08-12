@@ -12,12 +12,11 @@ class SubjectsController < ApplicationController
     @subject = @teacher.subjects.build(subject_params)
     respond_to do |format|
       if @subject.save
-        format.turbo_stream { render turbo_stream: root_path, notice: 'Subject was successfully added.' }
-        format.json { render :index, status: :created, location: @subject }
+        flash.now[:notice] = 'Subject was successfully added.'
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @subject.errors, status: :unprocessable_entity }
+        flash.now[:alert] = @subject.errors.full_messages.last
       end
+      format.turbo_stream { render turbo_stream: turbo_stream.append('flash', partial: 'layouts/flash') }
     end
   end
 
