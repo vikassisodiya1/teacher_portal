@@ -6,9 +6,10 @@ Rails.application.routes.draw do
   }
 
   root 'students#index'
-  resources :teachers do
-    resources :subjects, only: %i[new create]
-  end
+
+
+  get 'teachers/:teacher_id/subjects/new', to: 'subjects#new', as: :new_teacher_subject
+  post 'teachers/:teacher_id/subjects', to: 'subjects#create', as: :teacher_subjects
 
   resources :students, only: %i[index edit update destroy create]
   get 'add_student', to: 'students#new', as: 'add_student'
