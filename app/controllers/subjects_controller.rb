@@ -23,7 +23,7 @@ class SubjectsController < ApplicationController
   private
 
   def set_teacher
-    @teacher = Teacher.find(params[:teacher_id])
+    @teacher = current_user.teacher
   end
 
   def subject_params

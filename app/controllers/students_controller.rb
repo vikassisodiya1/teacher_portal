@@ -26,8 +26,8 @@ class StudentsController < ApplicationController
       if @student.update(student_params)
         flash.now[:notice] = 'Student was successfully updated.'
         format.turbo_stream do
-          render turbo_stream: [turbo_stream.append("student_#{@student.id}",
-                                                    partial: 'row', locals: { student: @student, mark: @student.marks.first }), turbo_stream.replace('flash', partial: 'layouts/flash')] # rubocop:disable Layout/LineLength
+          render turbo_stream: [turbo_stream.replace("student_#{@student.id}",
+                                                     partial: 'row', locals: { student: @student, mark: @student.marks.first }), turbo_stream.replace('flash', partial: 'layouts/flash')] # rubocop:disable Layout/LineLength
         end
       else
         flash.now[:alert] = @student.errors.full_messages.first
