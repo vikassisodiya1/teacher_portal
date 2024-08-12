@@ -5,42 +5,29 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
-
- <body class="bg-light">
-  <div class="d-flex flex-column min-vh-100 main-content">
-    <% if user_signed_in? %>
-      <nav class="navbar navbar-expand-lg navbar-light bg-body">
-        <div class="container">
-          <a class="navbar-brand" href="#!">
-            <img src="/tailwebs-logo.png" alt="Tailwebs Logo" width="175" height="30">
-          </a>
-          <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "btn" %>
-        </div>
-      </nav>
-    <% end %>
-
-    <div class="container mt-4">
-      <% if notice.present? %>
-        <div class="alert alert-info">
-          <%= notice %>
-        </div>
+  <body class="bg-light">
+    <div class="d-flex flex-column min-vh-100 main-content">
+      <% if user_signed_in? %>
+        <nav class="navbar navbar-expand-lg navbar-light bg-body">
+          <div class="container">
+            <a class="navbar-brand" href="#!">
+              <img src="/tailwebs-logo.png" alt="Tailwebs Logo" width="175" height="30">
+            </a>
+            <%= link_to "Update Profile", edit_user_registration_path, class: "btn" %>
+            <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "btn" %>
+          </div>
+        </nav>
       <% end %>
-      <% if alert.present? %>
-        <div class="alert alert-danger">
-          <%= alert %>
-        </div>
-      <% end %>
-
-      <%= yield %>
+      <div class="container mt-4">
+        <%= turbo_frame_tag "flash" do %>
+          <%= render "layouts/flash" %>
+        <% end %>
+        <%= yield %>
+      </div>
+      <%= turbo_frame_tag 'modal' %>
     </div>
-
-    <%= turbo_frame_tag 'modal' %>
-  </div>
-</body>
-
-
+  </body>
 </html>

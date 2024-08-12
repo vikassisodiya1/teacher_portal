@@ -5,22 +5,6 @@ class TeachersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_teacher, only: %i[show edit update destroy home_page]
 
-  # GET /teachers or /teachers.json
-  def index
-    @teachers = Teacher.all
-  end
-
-  # GET /teachers/1 or /teachers/1.json
-  def show; end
-
-  # GET /teachers/new
-  def new
-    @teacher = Teacher.new
-  end
-
-  # GET /teachers/1/edit
-  def edit; end
-
   # POST /teachers or /teachers.json
   def create
     @teacher = Teacher.new(teacher_params)
@@ -61,9 +45,6 @@ class TeachersController < ApplicationController
 
   def add_subject
     @students = Student.includes(:marks, :subjects).all
-
-    # @data = @teacher.subjects.includes(students: :mark)
-    # @students=@data.students
   end
 
   private

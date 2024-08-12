@@ -21,15 +21,17 @@ class StudentsController < ApplicationController
     @subjects = Subject.all
   end
 
-  def update
+  def update # rubocop:disable Metrics/MethodLength
     respond_to do |format|
       if @student.update(student_params)
+        flash.now[:notice] = 'Student was successfully updated.'
         format.turbo_stream do
-          render turbo_stream: turbo_stream.replace("student_#{@student.id}",
-                                                    partial: 'row', locals: { student: @student, mark: @student.marks.first }), notice: 'Student was successfully updated.' # rubocop:disable Layout/LineLength
+          render turbo_stream: [turbo_stream.append("student_#{@student.id}",
+                                                    partial: 'row', locals: { student: @student, mark: @student.marks.first }), turbo_stream.replace('flash', partial: 'layouts/flash')] # rubocop:disable Layout/LineLength
         end
       else
-        format.html { render :edit, status: :unprocessable_entity }
+        flash.now[:alert] = @student.errors.full_messages.first
+        format.turbo_stream { render turbo_stream: turbo_stream.append('flash', partial: 'layouts/flash') }
       end
     end
   end
@@ -37,8 +39,11 @@ class StudentsController < ApplicationController
   def destroy
     @student.destroy
     respond_to do |format|
-      format.turbo_stream { render turbo_stream: turbo_stream.remove("student_#{@student.id}") }
-      format.html { redirect_to root_path, notice: 'Student was successfully destroyed.' }
+      flash.now[:notice] = 'Student was successfully destroyed.'
+      format.turbo_stream do
+        render turbo_stream: [turbo_stream.remove("student_#{@student.id}"),
+                              turbo_stream.append('flash', partial: 'layouts/flash')]
+      end
     end
   end
 
@@ -46,14 +51,18 @@ class StudentsController < ApplicationController
     @student = Student.new(student_params)
     respond_to do |format|
       if @student.save
+        flash.now[:notice] = 'Student and associated subjects/marks were successfully created.'
         format.turbo_stream do
-          render turbo_stream: turbo_stream.prepend(
+          render turbo_stream: [turbo_stream.prepend(
             :student, partial: 'row', locals: { student: @student,
                                                 mark: @student.marks.first }
-          ), notice: 'Student and associated subjects/marks were successfully created.'
+          ), turbo_stream.append('flash', partial: 'layouts/flash')]
         end
       else
-        format.html { render :new, status: :unprocessable_entity }
+        flash.now[:alert] = @student.errors.full_messages.first
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.append('flash', partial: 'layouts/flash')
+        end
       end
     end
   end
